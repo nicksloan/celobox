@@ -11,6 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 import time
 import requests
+from pkg_resources import resource_filename
 
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36"
 
@@ -60,7 +61,9 @@ class Passwd(object):
 
     def load_data(self, domain):
         try:
-            return json.load(open(os.path.join('manifests', '%s.json' % domain)))
+            return json.load(open(
+                resource_filename(__name__, os.path.join('manifests', '{}.json'.format(domain)))
+            ))
         except IOError:
             return self.load_manifest(domain)
 
